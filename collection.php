@@ -68,7 +68,7 @@ $select_products = mysqli_query($conn, "SELECT * FROM `products` $category_filte
 
 <section class="products-2">
 
-   <h1 class="title" style="font-size: 30px;">Previous Szn Collection</h1>
+   <h1 class="title" style="font-size: 30px;">Previous Seasons</h1>
    <!-- <div class="slct">
       <div class="box-container-2">
          <div class="categor">
