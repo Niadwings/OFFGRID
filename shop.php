@@ -64,7 +64,6 @@ $select_products = mysqli_query($conn, "SELECT * FROM `products` $category_filte
 
    <div class="heading">
       <h3>shop</h3>
-      <p> <a href="home.php">Home</a> / Shop </p>
    </div>
 
 <section class="products">
