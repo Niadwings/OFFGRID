@@ -130,7 +130,7 @@ if (isset($_POST['order_btn'])) {
       <div class="flex">
          <div class="inputBox">
             <span>Your Name :</span>
-            <input type="text" name="name" required placeholder="enter your name">
+            <input type="text" name="name" required placeholder="enter your name" value ="<?php echo $user_data['name']; ?>">
          </div>
          <div class="inputBox">
             <span>Your Number :</span>
