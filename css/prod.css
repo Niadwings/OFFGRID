@@ -207,3 +207,9 @@ select {
         font-size: 2rem;
     }
 }
+
+.logo img {
+    width: 150px; /* Adjust width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Centering or layout adjustments */
+}
