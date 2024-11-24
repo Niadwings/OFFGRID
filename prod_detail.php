@@ -42,9 +42,6 @@ if(isset($_POST['add_to_cart'])) {
     } ?>
 
 <header>
-    <div class="logo">
-        <img src="OFFGRID/images/logo-off-grid.png">
-    </div>
 </header>
 
     <div class="breadcrumb">
