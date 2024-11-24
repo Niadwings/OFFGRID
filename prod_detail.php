@@ -41,12 +41,14 @@ if(isset($_POST['add_to_cart'])) {
         }
     } ?>
 
-    <header>
-        <div class="logo">Off→Grid</div>
-    </header>
+<header>
+    <div class="logo">
+        <img src="OFFGRID/images/logo-off-grid.png">
+    </div>
+</header>
 
     <div class="breadcrumb">
-        Product Details
+        <p><h1>Product Details</h1></p>
     </div>
 
     <main class="product-container">
@@ -63,7 +65,8 @@ if(isset($_POST['add_to_cart'])) {
 
         <div class="product-details">
             <h1 class="product-title"><?php echo htmlspecialchars($fetch_products['name']); ?></h1>
-            <div class="product-price">₱<?php echo number_format($fetch_products['price'], 2); ?></div>
+            <div class="product-price">₱<?php echo number_format($fetch_products['price'], 2); ?>
+        </div>
 
             <form action="" method="post">
                 <div class="form-group">
