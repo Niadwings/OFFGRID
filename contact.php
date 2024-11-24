@@ -59,7 +59,7 @@ if(isset($_POST['send'])){
 <section class="contact">
 
    <form action="" method="post">
-      <h3>Sabihin mo !</h3>
+      <h3>Contact Us!</h3>
       <input type="text" name="name" required placeholder="Enter your name" class="box">
       <input type="email" name="email" required placeholder="Enter your email" class="box">
       <input type="tel" name="number" required placeholder="Enter your number" class="box" oninput="limitNumberLength(this, 11);">

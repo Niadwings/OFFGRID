@@ -33,7 +33,6 @@ if(isset($_POST['add_to_cart'])) {
     <title>Product Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/prod.css">
-    
 </head>
 <body>
     <?php if(isset($message)){ 
@@ -43,7 +42,7 @@ if(isset($_POST['add_to_cart'])) {
     } ?>
 
     <header>
-        <div class="logo"></div>
+        <div class="logo">Off→Grid</div>
     </header>
 
     <div class="breadcrumb">
