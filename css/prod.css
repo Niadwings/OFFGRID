@@ -203,8 +203,18 @@ select {
     .logo {
         font-size: 2rem;
     }
+<<<<<<< HEAD
 
     .product-image {
         max-width: 300px;
     }
 }
+=======
+}
+
+.logo img {
+    width: 150px; /* Adjust width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Centering or layout adjustments */
+}
+>>>>>>> 22ed6e73e21d390636b1ca30de22e94c8218481c
