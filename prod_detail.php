@@ -2,25 +2,48 @@
 include 'config.php';
 session_start();
 
-$user_id = $_SESSION['user_id'];
-if(!isset($user_id)){
-   header('location:login.php');
+// Validate user session
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
 }
 
-if(isset($_POST['add_to_cart'])) {
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['product_price'];
-    $product_image = $_POST['product_image'];
-    $product_quantity = $_POST['product_quantity'];
-    $product_size = $_POST['size'];
+$user_id = $_SESSION['user_id'];
+$message = []; // Initialize message array
 
-    $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+// Handle add to cart functionality with prepared statement
+if (isset($_POST['add_to_cart'])) {
+    try {
+        // Validate and sanitize input
+        $product_name = trim($_POST['product_name']);
+        $product_price = floatval($_POST['product_price']);
+        $product_image = trim($_POST['product_image']);
+        $product_quantity = intval($_POST['product_quantity']);
+        $product_size = trim($_POST['size']);
 
-    if(mysqli_num_rows($check_cart_numbers) > 0){
-        $message[] = 'Already added to cart.';
-    }else{
-        mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image, size) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image', '$product_size')") or die('query failed');
-        $message[] = 'Product added to cart.';
+        // Check if product already in cart
+        $check_stmt = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
+        $check_stmt->bind_param("si", $product_name, $user_id);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+
+        if ($check_result->num_rows > 0) {
+            $message[] = 'Already added to cart.';
+        } else {
+            // Insert into cart with prepared statement
+            $insert_stmt = $conn->prepare("INSERT INTO `cart`(user_id, name, price, quantity, image, size) VALUES(?, ?, ?, ?, ?, ?)");
+            $insert_stmt->bind_param("issdss", $user_id, $product_name, $product_price, $product_quantity, $product_image, $product_size);
+            
+            if ($insert_stmt->execute()) {
+                $message[] = 'Product added to cart.';
+            } else {
+                $message[] = 'Failed to add product to cart.';
+            }
+            $insert_stmt->close();
+        }
+        $check_stmt->close();
+    } catch (Exception $e) {
+        $message[] = 'Error processing request: ' . htmlspecialchars($e->getMessage());
     }
 }
 ?>
@@ -35,35 +58,44 @@ if(isset($_POST['add_to_cart'])) {
     <link rel="stylesheet" href="css/prod.css">
 </head>
 <body>
-    <?php if(isset($message)){ 
-        foreach($message as $msg){
-            echo '<div class="message">'.$msg.'</div>';
+    <?php 
+    // Display messages
+    if (!empty($message)) { 
+        foreach ($message as $msg) {
+            echo '<div class="message">' . htmlspecialchars($msg) . '</div>';
         }
-    } ?>
+    } 
+    ?>
 
-<header>
-</header>
+    <header></header>
 
     <div class="breadcrumb">
-        <p><h1>Product Details</h1></p>
+        <h1>Product Details</h1>
     </div>
 
     <main class="product-container">
         <?php
-        if(isset($_GET['id'])){
-            $id = $_GET['id'];
-            $select_products = mysqli_query($conn, "SELECT * FROM `products` WHERE id = '$id'") or die('query failed');
-            if(mysqli_num_rows($select_products) > 0){
-                $fetch_products = mysqli_fetch_assoc($select_products);
+        // Validate and sanitize product ID
+        if (isset($_GET['id'])) {
+            $id = intval($_GET['id']); // Convert to integer to prevent SQL injection
+
+            // Use prepared statement to fetch product
+            $select_stmt = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
+            $select_stmt->bind_param("i", $id);
+            $select_stmt->execute();
+            $select_products = $select_stmt->get_result();
+
+            if ($select_products->num_rows > 0) {
+                $fetch_products = $select_products->fetch_assoc();
         ?>
         <div class="product-image">
-            <img src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="<?php echo htmlspecialchars($fetch_products['name']); ?>">
+            <img src="uploaded_img/<?php echo htmlspecialchars($fetch_products['image']); ?>" 
+                 alt="<?php echo htmlspecialchars($fetch_products['name']); ?>">
         </div>
 
         <div class="product-details">
             <h1 class="product-title"><?php echo htmlspecialchars($fetch_products['name']); ?></h1>
-            <div class="product-price">₱<?php echo number_format($fetch_products['price'], 2); ?>
-        </div>
+            <div class="product-price">₱<?php echo number_format($fetch_products['price'], 2); ?></div>
 
             <form action="" method="post">
                 <div class="form-group">
@@ -81,8 +113,8 @@ if(isset($_POST['add_to_cart'])) {
                 </div>
 
                 <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($fetch_products['name']); ?>">
-                <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
-                <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($fetch_products['price']); ?>">
+                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($fetch_products['image']); ?>">
 
                 <div class="button-group">
                     <input type="submit" value="Add to Cart" name="add_to_cart" class="btn">
@@ -92,9 +124,12 @@ if(isset($_POST['add_to_cart'])) {
             </form>
         </div>
         <?php
+            } else {
+                echo '<p class="empty">No product found!</p>';
             }
-        }else{
-            echo '<p class="empty">No product found!</p>';
+            $select_stmt->close(); // Close the statement
+        } else {
+            echo '<p class="empty">No product ID provided!</p>';
         }
         ?>
     </main>
