@@ -60,9 +60,8 @@ class Registration {
                 throw new Exception('Registration failed! Please try again.');
             }
             
-            $_SESSION['registration_success'] = true;
-            header('Location: login.php');
-            exit;
+            // Set success message
+            $this->messages[] = 'Account created successfully!';
             
         } catch (Exception $e) {
             $this->messages[] = $e->getMessage();
@@ -142,6 +141,11 @@ $messages = $registration->getMessages();
             color: #333;
         }
 
+        .modal-message.success {
+            color: #28a745;
+            font-weight: bold;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -198,8 +202,14 @@ $messages = $registration->getMessages();
             const form = document.getElementById('registrationForm');
 
             // Show modal with message
-            function showModal(message) {
+            function showModal(message, isSuccess = false) {
                 modalMessage.textContent = message;
+                modalMessage.classList.remove('success');
+                
+                if (isSuccess) {
+                    modalMessage.classList.add('success');
+                }
+                
                 modal.style.display = 'block';
             }
 
@@ -253,7 +263,17 @@ $messages = $registration->getMessages();
 
             // Show PHP validation messages if any
             <?php if (!empty($messages)): ?>
-                showModal(<?php echo json_encode($messages[0]); ?>);
+                <?php foreach ($messages as $message): ?>
+                    <?php if (strpos($message, 'Account created successfully!') !== false): ?>
+                        showModal(<?php echo json_encode($message); ?>, true);
+                        // Redirect to login page after 2 seconds
+                        setTimeout(function() {
+                            window.location.href = 'login.php';
+                        }, 2000);
+                    <?php else: ?>
+                        showModal(<?php echo json_encode($message); ?>);
+                    <?php endif; ?>
+                <?php endforeach; ?>
             <?php endif; ?>
         });
     </script>
