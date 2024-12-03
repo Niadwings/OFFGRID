@@ -62,12 +62,12 @@ if(!isset($user_id)){
    <div class="box-container">
 
       <div class="box">
-         <img src="./images/developers/pp-1.png" alt="">
+         <img src="./images/developers/trisha.png" alt="">
          <h3>Trisha Ann Broncano</h3>
       </div>
 
       <div class="box">
-         <img src="./images/developers/pp-2.png" alt="">
+         <img src="./images/developers/offgrid.png" alt="">
          <h3>OFF-GRID</h3>
       </div>
 
@@ -77,7 +77,7 @@ if(!isset($user_id)){
       </div>
 
       <div class="box">
-         <img src="./images/developers/pp-4.png" alt="">
+         <img src="./images/developers/leo.png" alt="">
          <h3>Leonel Vergara</h3>
       </div>
 
@@ -87,7 +87,7 @@ if(!isset($user_id)){
       </div>
 
       <div class="box">
-         <img src="./images/developers/pp-6.png" alt="">
+         <img src="./images/developers/david.png" alt="">
          <h3>John David Calayo</h3>
       </div>
 
