@@ -63,32 +63,32 @@ if(!isset($user_id)){
 
       <div class="box">
          <img src="./images/developers/pp-1.png" alt="">
-         <h3>Ivy</h3>
+         <h3>Trisha Ann Broncano</h3>
       </div>
 
       <div class="box">
          <img src="./images/developers/pp-2.png" alt="">
-         <h3>Kenneth</h3>
+         <h3>OFF-GRID</h3>
       </div>
 
       <div class="box">
          <img src="./images/developers/pp-3.png" alt="">
-         <h3>Ela</h3>
+         <h3>Diaz Anthony</h3>
       </div>
 
       <div class="box">
          <img src="./images/developers/pp-4.png" alt="">
-         <h3>Cyrus</h3>
+         <h3>Leonel Vergara</h3>
       </div>
 
       <div class="box">
          <img src="./images/developers/pp-5.png" alt="">
-         <h3>Nicole</h3>
+         <h3>Nicole Angela Mariano</h3>
       </div>
 
       <div class="box">
          <img src="./images/developers/pp-6.png" alt="">
-         <h3>Kurt</h3>
+         <h3>John David Calayo</h3>
       </div>
 
    </div>
