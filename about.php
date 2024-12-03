@@ -72,7 +72,7 @@ if(!isset($user_id)){
       </div>
 
       <div class="box">
-         <img src="./images/developers/pp-3.png" alt="">
+         <img src="./images/developers/diaz.png" alt="">
          <h3>Diaz Anthony</h3>
       </div>
 
@@ -83,7 +83,7 @@ if(!isset($user_id)){
 
       <div class="box">
          <img src="./images/developers/pp-5.png" alt="">
-         <h3>Nicole Angela Mariano</h3>
+         <h3>Angela Nicole Mariano</h3>
       </div>
 
       <div class="box">
